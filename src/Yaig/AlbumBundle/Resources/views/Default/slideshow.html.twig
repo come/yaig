@@ -1,0 +1,59 @@
+{% extends "::base.html.twig" %}
+{% block stylesheets %}
+  {{ parent() }}
+  <link href="{{ asset('bundles/yaigalbum/css/album.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+  <div class="right toolBar">
+    <a href="{{ path('_media_delete', {"id":current_media.id}) }}">{{ 'remove this media'|trans }}</a> | 
+    <a href="{{ path('_album_show', {'id' : album.id}) }}">{{ 'organize album'|trans }}</a>
+  </div>
+  <h2>
+      {{ 'Album :' | trans }}
+      <a href="{{ path('_album_show', {'id' : album.id}) }}">{{album.name}}</a>
+      >
+      {{current_media.name}}
+  </h2>
+    
+  <div class="left" style="width:70%;text-align:center;position:relative">
+    <div class="slideshow_prev">
+      <img class="img hidden" src="{{asset('/images/arrow_l.png')}}" />
+    </div>
+    <div class="slideshow_next">
+      <img class="img hidden" src="{{asset('/images/arrow_r.png')}}" />
+    </div>
+    <img class="img" src="{{asset(current_media.getWebPath('classic'))}}" style="max-width:100%;max-height:100%;" />
+  </div>
+  <div class="right" style="width:29%;height:800px;overflow:auto">
+    <div style="">
+      {% for media in medias %}
+        <div class="left">
+          {% include "YaigMediaBundle:Default:item.html.twig"  %}
+        </div>
+      {% endfor %}
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  
+  
+  <script>
+     $(".slideshow_next").hover(function(){
+      $(this).children('img').fadeIn();
+     }, function(){
+      $(this).children('img').fadeOut();
+     });
+     $(".slideshow_next").click(function(){
+      location.href = "{{ path('_album_slideshow', {'id' : album.id, 'media_id' : next}) }}#content";
+     });
+     $(".slideshow_prev").hover(function(){
+      $(this).children('img').fadeIn();
+     }, function(){
+      $(this).children('img').fadeOut();
+     });
+     $(".slideshow_prev").click(function(){
+      location.href = "{{ path('_album_slideshow', {'id' : album.id, 'media_id' : prev}) }}#content";
+     });
+  </script>
+{% endblock %}

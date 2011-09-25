@@ -1,0 +1,12 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+  
+  {% for album in last_albums %}
+    <div class="left">
+      {% include "YaigAlbumBundle:Default:item.html.twig"  %}
+    </div>
+  {% endfor %}
+  <div class="clear"></div>
+  <a href="{{ path('_album_new') }}">{{ 'add new album'|trans }}</a>
+{% endblock %}

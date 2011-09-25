@@ -1,0 +1,4 @@
+.slideshow_next{position:absolute;top:0px;right:0px;width:30%;height:100%;cursor:pointer;text-align:right;}
+.slideshow_prev{position:absolute;top:0px;left:0px;width:30%;height:100%;cursor:pointer;text-align:left;}
+.slideshow_next img{margin-top:100px;border:none;}
+.slideshow_prev img{margin-top:100px;border:none;}

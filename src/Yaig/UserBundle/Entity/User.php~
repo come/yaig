@@ -1,0 +1,78 @@
+<?php
+// src/Yaig/UserBundle/Entity/User.php
+
+namespace Yaig\UserBundle\Entity;
+
+use FOS\UserBundle\Entity\User as BaseUser;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="fos_user")
+ */
+class User extends BaseUser
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
+    
+ public function getDirPath($rel = null, $mkdir = true)
+  {
+    $md5 = str_split(md5($this->getId()));
+    if($rel)
+    {
+      $path = '/uploads/users/'.$md5[0].'/'.$md5[1].'/'.$md5[2].'/'.$md5[3].'/'.$md5[4].'/'.$md5[5].'/'.$md5[6].'/'.$md5[7].'/'.$this->getId().'/'.$rel;
+    }
+    else
+    {
+      $path = '/uploads/users/'.$md5[0].'/'.$md5[1].'/'.$md5[2].'/'.$md5[3].'/'.$md5[4].'/'.$md5[5].'/'.$md5[6].'/'.$md5[7].'/'.$this->getId();
+    }
+    
+    if(!is_dir($path) and $mkdir)
+    {
+      mkdir($path, 0777, true);
+    }
+    
+    return $path;
+  }
+  
+  public function getDirUrl($rel = null, $mkdir = true)
+  {
+    $md5 = str_split(md5($this->getId()));
+    if($rel)
+    {
+      $path = '/uploads/users/'.$md5[0].'/'.$md5[1].'/'.$md5[2].'/'.$md5[3].'/'.$md5[4].'/'.$md5[5].'/'.$md5[6].'/'.$md5[7].'/'.$this->getId().'/'.$rel;
+    }
+    else
+    {
+      $path = '/uploads/users/'.$md5[0].'/'.$md5[1].'/'.$md5[2].'/'.$md5[3].'/'.$md5[4].'/'.$md5[5].'/'.$md5[6].'/'.$md5[7].'/'.$this->getId();
+    }
+    
+    if(!is_dir(sfConfig::get('sf_upload_dir').str_replace('/uploads','',$path)) and $mkdir)
+    {
+      mkdir(sfConfig::get('sf_upload_dir').str_replace('/uploads','',$path), 0777, true);
+    }
+    
+    return $path;
+  }
+  
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

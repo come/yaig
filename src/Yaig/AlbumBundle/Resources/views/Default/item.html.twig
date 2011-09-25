@@ -1,0 +1,6 @@
+<a href="{{ path('_album_slideshow', {'id' : album.id, 'media_id' : album.getPicture.getId }) }}">
+  <div class="album_item">
+    <img src="{{asset(album.getPicture.getWebPath('thumb'))}}" style="width:100%;height:100%" />
+    <div class="title">{{album.name}}</div>
+  </div>
+</a>

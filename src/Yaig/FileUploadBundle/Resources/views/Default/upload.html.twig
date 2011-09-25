@@ -1,0 +1,42 @@
+<script src="{{ asset('bundles/yaigfileupload/js/file_upload.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/yaigfileupload/js/iframe_transport.js') }}" type="text/javascript"></script>
+
+<div>
+  <form action="{{ path('_media_upload_album', {'album_id' : album.id}) }}" method="POST" enctype="multipart/form-data">
+      <div class="fileupload-buttonbar">
+          <label class="fileinput-button">
+              <span>Add files...</span>
+              <input id="fileupload" type="file" name="files[]" multiple>
+          </label>
+          
+      </div>
+  </form>
+     <div class="fileupload-content">
+        
+    </div>
+</div>
+<script>
+$('#fileupload').fileupload({
+        dataType: 'json',
+        url: '{{ path('_media_upload_album', {'album_id' : album.id})  }}',
+        limitConcurrentUploads: 3,
+        send: function (e, data) {
+           $.each(data.files, function(index, file){
+                html = '<div rel="'+file.fileName+'" class="uploading media_item left"><div class="title">'+file.fileName+'</div><div class="progress"><div class="content"></div></div></div>';
+                $('.fileupload-content').append(html);
+            });
+        },
+        progress: function (e, data) {
+          
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $.each(data.files, function(index, file){
+              $(".uploading[rel='"+file.fileName+"'] > .progress > .content").css('width', progress+'%');
+            });
+        },
+        done: function (e, data) {
+            $.each(data.result, function (index, file) {
+              $(".uploading[rel='"+file.fileName+"']").html('<img src="'+file.filePath+'" /><div class="title">'+file.fileName+'</div>');
+            });
+        }
+    });
+</script>

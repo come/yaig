@@ -1,0 +1,28 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+  <div class="right toolBar">
+    <a href="{{ path('_album_show', {'id' : album.id}) }}">{{ 'organize album'|trans }}</a>
+  </div>
+  <h2>
+    {{ 'Album : %name%'| trans({'%name%': album.name}, "app")  }}
+  </h2>
+  
+    
+  {% for media in medias %}
+    <div class="left">
+      {% include "YaigMediaBundle:Default:item.html.twig"  %}
+    </div>
+  {% endfor %}
+  <div class="clear"></div>
+  <a href="{{ path('_media_new_for_album', {"album_id":album.id}) }}">{{ 'add new media'|trans }}</a>
+ 
+  <div>
+    {% include "YaigFileUploadBundle:Default:upload.html.twig"  %}
+  </div>
+  
+  
+<script>
+  
+</script>
+{% endblock %}

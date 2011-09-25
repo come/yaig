@@ -1,0 +1,13 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+  
+  <h2>
+    {{ 'New Media'|trans }}
+  </h2>
+  <form action="#" method="post" {{ form_enctype(form) }}>
+      {{ form_widget(form) }}
+
+      <input type="submit" value="Upload Document" />
+  </form>
+{% endblock %}
